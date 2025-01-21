@@ -1,9 +1,12 @@
 import Form from "../Form"
 
 const Login = () => {
+  const handleLogin = ()=>{
+
+  }
   return (
     <div>
-      <Form/>
+      <Form type="login" onSubmit = {handleLogin} />
     </div>
   )
 }
