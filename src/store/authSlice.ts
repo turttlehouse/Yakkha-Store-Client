@@ -1,4 +1,16 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import axios from 'axios'
+
+interface RegisterData{
+    username : string,
+    email : string,
+    password : string
+}
+
+interface LoginData{
+    email : string,
+    password : string
+}
 
 interface User{
     username : string,
@@ -15,7 +27,7 @@ interface AuthState{
 
 const initialState : AuthState = {
     user : {} as User,
-    status : "loading" //network request status 
+    status : "" //network request status 
 }
 
 const authSlice = createSlice({
@@ -34,3 +46,41 @@ const authSlice = createSlice({
 
 export const {setUser,setStatus} = authSlice.actions
 export default authSlice.reducer
+
+export function register(data:RegisterData){
+    return async function registerThunk(dispatch: any){
+        dispatch(setStatus("loading"))
+        try {
+            const response = await axios.post("http://localhost:5000/register",data);
+            if(response.status === 201){ 
+                dispatch(setStatus("success"))
+            }
+            else{
+                dispatch(setStatus("error"))
+                
+            }
+            
+        } catch (error) {
+            dispatch(setStatus("error"))
+        }
+    }
+}
+
+
+export function login(data : LoginData){
+    return async function loginThunk(dispatch:any){
+        dispatch(setStatus("loading"))
+        try {
+            const response = await axios.post("http://localhost:5000/login",data);
+            if(response.status === 200){
+                dispatch(setUser(response.data))
+                dispatch(setStatus("success"))
+            }
+            else{
+                dispatch(setStatus("error"))
+            }
+        } catch (error) {
+            dispatch(setStatus("error"))
+        }
+    }
+}
