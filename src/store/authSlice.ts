@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import axios from 'axios'
+import API from '../http'
 
 interface RegisterData{
     username : string,
@@ -51,7 +51,7 @@ export function register(data:RegisterData){
     return async function registerThunk(dispatch: any){
         dispatch(setStatus("loading"))
         try {
-            const response = await axios.post("http://localhost:5000/register",data);
+            const response = await API.post("register",data);
             if(response.status === 201){ 
                 dispatch(setStatus("success"))
             }
@@ -71,7 +71,7 @@ export function login(data : LoginData){
     return async function loginThunk(dispatch:any){
         dispatch(setStatus("loading"))
         try {
-            const response = await axios.post("http://localhost:5000/login",data);
+            const response = await API.post("login",data);
             if(response.status === 200){
                 dispatch(setUser(response.data))
                 dispatch(setStatus("success"))
