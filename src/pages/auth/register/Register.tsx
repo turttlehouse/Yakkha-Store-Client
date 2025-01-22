@@ -1,7 +1,7 @@
 import Form from "../Form"
 import { UserDataType } from "../types"
 import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { register, setResetStatus } from "../../../store/authSlice"
+import { register, resetStatus,  } from "../../../store/authSlice"
 import { Status } from "../../../globals/types/types"
 import { useNavigate } from "react-router-dom"
 import React from "react"
@@ -24,7 +24,7 @@ const Register = () => {
   React.useEffect(()=>{
     //so next page ma navigate garda ni status success nai vayera basirakhxa so status reset garnu paro
     if(status === Status.SUCCESS){
-      dispatch(setResetStatus())
+      dispatch(resetStatus())
       navigate('/login')
     }
   },[navigate,status,dispatch])
