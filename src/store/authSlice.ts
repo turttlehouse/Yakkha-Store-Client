@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import API from '../http'
+import { Status } from '../globals/types/types'
 
 interface RegisterData{
     username : string,
@@ -22,12 +23,12 @@ interface User{
 
 interface AuthState{
     user : User,
-    status : string
+    status : Status
 }
 
 const initialState : AuthState = {
     user : {} as User,
-    status : "" //network request status 
+    status : Status.LOADING//network request status 
 }
 
 const authSlice = createSlice({
@@ -37,31 +38,34 @@ const authSlice = createSlice({
         setUser(state:AuthState,action:PayloadAction<User>){
             state.user = action.payload
         },
-        setStatus(state:AuthState,action : PayloadAction<string>){
+        setStatus(state:AuthState,action : PayloadAction<Status>){
             state.status = action.payload
+        },
+        setResetStatus(state:AuthState){
+            state.status = Status.LOADING
         }
     }
      
 })
 
-export const {setUser,setStatus} = authSlice.actions
+export const {setUser,setStatus,setResetStatus} = authSlice.actions
 export default authSlice.reducer
 
 export function register(data:RegisterData){
     return async function registerThunk(dispatch: any){
-        dispatch(setStatus("loading"))
+        dispatch(setStatus(Status.LOADING))
         try {
             const response = await API.post("register",data);
-            if(response.status === 201){ 
-                dispatch(setStatus("success"))
+            if(response.status === 200){ 
+                dispatch(setStatus(Status.SUCCESS))
             }
             else{
-                dispatch(setStatus("error"))
+                dispatch(setStatus(Status.ERROR))
                 
             }
             
         } catch (error) {
-            dispatch(setStatus("error"))
+            dispatch(setStatus(Status.ERROR))
         }
     }
 }
@@ -69,18 +73,18 @@ export function register(data:RegisterData){
 
 export function login(data : LoginData){
     return async function loginThunk(dispatch:any){
-        dispatch(setStatus("loading"))
+        dispatch(setStatus(Status.LOADING))
         try {
             const response = await API.post("login",data);
             if(response.status === 200){
                 dispatch(setUser(response.data))
-                dispatch(setStatus("success"))
+                dispatch(setStatus(Status.SUCCESS))
             }
             else{
-                dispatch(setStatus("error"))
+                dispatch(setStatus(Status.ERROR))
             }
         } catch (error) {
-            dispatch(setStatus("error"))
+            dispatch(setStatus(Status.ERROR))
         }
     }
 }
