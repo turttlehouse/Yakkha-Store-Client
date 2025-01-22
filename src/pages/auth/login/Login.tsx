@@ -1,7 +1,9 @@
 import Form from "../Form"
+import { UserDataType } from "../types"
 
 const Login = () => {
-  const handleLogin = ()=>{
+  const handleLogin = (data : UserDataType)=>{
+    console.log(data);
 
   }
   return (

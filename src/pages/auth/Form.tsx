@@ -1,15 +1,33 @@
 import React from "react"
 import { Link } from "react-router-dom"
-
-interface Props {
-  type : string
-  onSubmit:()=>void
-}
-
-
+import { Props } from "./types"
 
 
 const Form:React.FC<Props> = ({type,onSubmit}) => {
+  const [userData,setUserData] = React.useState({
+    email : "",
+    username : "",
+    password : ""
+  })
+
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
+    const {name,value} = e.target
+    // Computed Property Name ([name]):
+    // The square brackets around name indicate that this is a computed property name. This means that the value of the variable name will be used as the key in the new object.
+    // For example, if name is "email", then [name]: value will be equivalent to "email": value.
+    setUserData({
+      ...userData,
+      [name] : value
+    })
+    // updates the userData state by copying all existing properties of userData and then adding or updating the property specified by name with the new value.
+  }
+
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault()
+    onSubmit(userData);
+  }
+
+
     return (
       <>
       {/* Page Container */}
@@ -49,12 +67,13 @@ const Form:React.FC<Props> = ({type,onSubmit}) => {
               {/* Sign In Form */}
               <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm dark:bg-gray-800 dark:text-gray-100">
                 <div className="grow p-5 md:px-16 md:py-12">
-                  <form className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-1">
                       <label htmlFor="email" className="text-sm font-medium">
                         Email
                       </label>
                       <input
+                        onChange={handleChange}
                         type="email"
                         id="email"
                         name="email"
@@ -69,6 +88,7 @@ const Form:React.FC<Props> = ({type,onSubmit}) => {
                         Username
                       </label>
                       <input
+                        onChange={handleChange}
                         type="username"
                         id="username"
                         name="username"
@@ -83,6 +103,7 @@ const Form:React.FC<Props> = ({type,onSubmit}) => {
                         Password
                       </label>
                       <input
+                        onChange={handleChange}
                         type="password"
                         id="password"
                         name="password"
@@ -125,22 +146,9 @@ const Form:React.FC<Props> = ({type,onSubmit}) => {
                             clipRule="evenodd"
                           />
                         </svg>
-                        <span>Sign In</span>
+                        <span>{type === 'register' ? 'Sign Up' : 'Sign In'}</span>
                       </button>
-                      {/* Divider: With Label */}
-                      <div className="my-5 flex items-center">
-                        <span
-                          aria-hidden="true"
-                          className="h-0.5 grow rounded bg-gray-100 dark:bg-gray-700/75"
-                        />
-                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
-                          or sign in with
-                        </span>
-                        <span
-                          aria-hidden="true"
-                          className="h-0.5 grow rounded bg-gray-100 dark:bg-gray-700/75"
-                        />
-                      </div>
+                      
                       
                     </div>
                   </form>
