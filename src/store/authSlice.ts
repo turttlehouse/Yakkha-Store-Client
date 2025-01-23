@@ -81,7 +81,7 @@ export function login(data : LoginData){
             const response = await API.post("login",data);
             if(response.status === 200){
                 const {data} = response.data
-                console.log(data);
+                // console.log(data);
                 // dispatch(setUser(response.data))
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(setToken(data))
