@@ -39,7 +39,7 @@ export function fetchProducts(){
     return async function fetchProductsThunk(dispatch : AppDispatch) {
         dispatch(setStatus(Status.LOADING));
         try {
-            const response = await API.get('admin/products')
+            const response = await API.get('admin/product')
             if(response.status === 200){
                 const {data} = response.data;
                 dispatch(setStatus(Status.SUCCESS));

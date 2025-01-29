@@ -1,7 +1,18 @@
+import React from "react";
 import Card from "../../globals/components/card/Card";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import Hero from "./components/Hero";
+import { fetchProducts } from "../../store/productSlice";
 
 const Home = () => {
+  const dipatch = useAppDispatch();
+  //state ma whole store airahunxa so tya bata pani products matra nikalna ko lagi accessing productsliec using products key from store
+  const {product} = useAppSelector((state) => state.products);
+
+  React.useEffect(() => {
+    dipatch(fetchProducts());
+  }, []);
+
   return (
     <>
       <Hero />
@@ -10,9 +21,14 @@ const Home = () => {
           Top Products
         </h1>
         <div className="flex flex-wrap justify-center gap-4">
-          <Card />
-          <Card />
-          <Card />
+        {
+          product?.length > 0 && product.map((pd)=>{
+            return(
+              <Card key={pd.id} data={pd} />
+            )
+          })
+        }
+          
         </div>
       </div>
     </>
