@@ -30,4 +30,5 @@ export interface Product{
 export interface ProductState{
     product : Product[];
     status : Status;
+    singleProduct : Product | null;
 }

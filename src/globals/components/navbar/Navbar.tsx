@@ -41,7 +41,7 @@ const Navbar = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span>Company</span>
+            <span className="text-black">Company</span>
           </a>
         </div>
         <nav className="space-x-3 md:space-x-6">
@@ -49,13 +49,13 @@ const Navbar = () => {
             <>
               <Link
                 to="/login"
-                className="text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+                className="text-sm font-semibold text-black "
               >
                 <span>Login</span>
               </Link>
               <Link
                 to="/register"
-                className="text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+                className="text-sm font-semibold text-black "
               >
                 <span>Register</span>
               </Link>
@@ -64,7 +64,7 @@ const Navbar = () => {
             <Link
               to="#"
               onClick={handleLogout}
-              className="text-sm font-semibold text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400"
+              className="text-sm font-semibold text-black hover:text-blue-600  dark:hover:text-blue-400"
             >
               <span>Logout</span>
             </Link>

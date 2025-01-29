@@ -1,9 +1,9 @@
 import React from 'react'
 import Navbar from '../../../globals/components/navbar/Navbar'
 
-const Hero = () => {
+const Hero : React.FC = () => {
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900 dark:text-gray-100">
+    <div className="relative overflow-hidden bg-white dark:bg-white dark:text-gray-100">
       {/* Main Header */}
         <Navbar />
       {/* END Main Header */}

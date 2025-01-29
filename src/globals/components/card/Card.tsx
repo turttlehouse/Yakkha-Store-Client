@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "../../types/productTypes";
+import { Link } from "react-router-dom";
 
 interface CardProps {
   data: Product;
@@ -9,6 +10,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ data }) => {
   return (
     <>
+    <Link to={`/product/${data.id}`}>
       <div className="max-w-2xl mx-auto mt-4">
         <div className="bg-white shadow-md rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
           <a href="#">
@@ -83,6 +85,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
           </div>
         </div>
       </div>
+    </Link>
     </>
   );
 };
