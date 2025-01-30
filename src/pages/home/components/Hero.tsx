@@ -3,7 +3,7 @@ import Navbar from '../../../globals/components/navbar/Navbar'
 
 const Hero : React.FC = () => {
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-white dark:text-gray-100">
+    <div className="relative overflow-hidden bg-blue-300">
       {/* Main Header */}
         <Navbar />
       {/* END Main Header */}

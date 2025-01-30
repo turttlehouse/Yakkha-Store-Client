@@ -16,6 +16,7 @@ const cartSlice = createSlice({
     initialState,
     reducers : {
         setItems(state:CartState,action:PayloadAction<CartItem[]>){
+            // console.log(action.payload);
             state.items = action.payload
         },
         setStatus(state:CartState,action: PayloadAction<Status>){
@@ -40,7 +41,6 @@ export function addToCart(productId:string){
                 productId,
                 quantity : 1
             })
-            console.log(response.data)
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(setItems(response.data.data))
@@ -56,3 +56,21 @@ export function addToCart(productId:string){
     }
 }
 
+export function fetchCartItems(){
+    return async function fetchCartItemsThunk(dispatch: AppDispatch){
+        dispatch(setStatus(Status.LOADING))
+        try {
+            const response = await APIAuthenticated.get('customer/cart')
+            if(response.status === 200){
+                dispatch(setStatus(Status.SUCCESS))
+                dispatch(setItems(response.data.data))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+            
+        } catch (error) {
+            dispatch(setStatus(Status.ERROR))
+            
+        }
+    }
+}
