@@ -10,18 +10,17 @@ const Hero : React.FC = () => {
     <div className="container relative mx-auto flex flex-col gap-16 px-4 py-16 text-center lg:flex-row lg:gap-0 lg:px-8 lg:py-32 lg:text-left xl:max-w-7xl">
     <div className="lg:flex lg:w-1/2 lg:items-center">
       <div>
-        <div className="mb-2 inline-flex rounded border border-gray-200 bg-gray-100 px-2 py-1 text-sm font-medium leading-4 text-gray-800 dark:border-gray-600/50 dark:bg-gray-700/50 dark:text-gray-200">
+        {/* <div className="mb-2 inline-flex rounded border border-gray-200 bg-gray-100 px-2 py-1 text-sm font-medium leading-4 text-gray-800 dark:border-gray-600/50 dark:bg-gray-700/50 dark:text-gray-200">
           v6.0 Latest Version
-        </div>
+        </div> */}
         <h1 className="mb-4 text-4xl font-black text-black dark:text-white">
-          Next generation
+          Yakkha
           <span className="text-blue-600 dark:text-blue-500">
-            website builder
+            &nbsp;Store
           </span>
         </h1>
-        <h2 className="text-xl font-medium leading-relaxed text-gray-700 dark:text-gray-300">
-          Super fast and easy to use software to power your next idea or
-          build your client’s web projects. Get it today and profit.
+        <h2 className="text-xl font-bold text-[black] leading-relaxed ">
+          Yakkha Store is a platform where you can find all the products you need. We provide a wide range of products from different categories. We are here to provide you with the best products at the best price.
         </h2>
         <div className="flex flex-col justify-center gap-2 pb-16 pt-10 sm:flex-row sm:items-center lg:justify-start">
           <a
@@ -58,7 +57,7 @@ const Hero : React.FC = () => {
         <div className="absolute inset-0 -m-6 -rotate-2 rounded-xl bg-gray-200 dark:bg-gray-800" />
         <div className="absolute inset-0 -m-6 rotate-1 rounded-xl bg-blue-800/75 shadow-inner dark:bg-blue-900/75" />
         <img
-          src="https://cdn.tailkit.com/media/placeholders/photo-RSCirJ70NDM-800x1000.jpg"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo_atYowTOntGb2eORVBIfns8cYsPLv1YKoA&s"
           className="relative mx-auto rounded-lg shadow-lg"
           alt="Hero Image"
         />

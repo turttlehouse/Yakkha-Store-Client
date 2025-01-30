@@ -76,7 +76,7 @@ const Navbar = () => {
               to="/cart"
               className="text-sm font-semibold text-black hover:text-blue-600  dark:hover:text-blue-400"
             >
-              <span>Cart <sup>{items?.length}</sup></span>
+              <span>Cart <sup>{items?.length >0 && items?.length}</sup></span>
             </Link>
             <Link
               to="#"

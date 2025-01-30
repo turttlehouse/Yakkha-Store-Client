@@ -18,17 +18,25 @@ const Cart: React.FC = () => {
       dispatch(updateCartItem(productId,quantity))
     }
 
+    const totalQuantityInCarts = items && items?.reduce((total,item)=>item?.quantity + total,0)
+    const totalPriceInCarts = items?.reduce((total,item)=>item?.Product?.productPrice * item?.quantity + total,0)
+
   return (
     <>
       <Navbar />
       <div className="h-screen bg-gray-200 pt-20">
-        <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
+        {
+          items?.length > 0 && (
+            <h1 className="mb-10 text-center text-2xl font-bold">Cart Items</h1>
+
+          )
+        }
         <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
 
           <div className="rounded-lg md:w-2/3">
            
            {
-            items?.length > 0 && items.map((item)=>{
+            items?.length > 0 ? ( items.map((item)=>{
                 return(
 
             <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
@@ -77,35 +85,43 @@ const Cart: React.FC = () => {
             </div>
                 )
             })
+          ):(
+          <img src="/emptyCart.png" className="mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl" />          
+        )
            }
           </div>
 
-
-          <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-            <div className="mb-2 flex justify-between">
-              <p className="text-gray-700">Total Items</p>
-              <p className="text-gray-700"></p>
-            </div>
-            <div className="mb-2 flex justify-between">
-              <p className="text-gray-700">Subtotal</p>
-              <p className="text-gray-700">Rs.</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="text-gray-700">Shipping</p>
-              <p className="text-gray-700">Rs 100</p>
-            </div>
-            <hr className="my-4" />
-            <div className="flex justify-between">
-              <p className="text-lg font-bold">Total</p>
-              <div className="">
-                <p className="mb-1 text-lg font-bold">Rs.</p>
-                <p className="text-sm text-gray-700">including VAT</p>
+           {
+            items?.length>0 && items && (
+            <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+              <div className="mb-2 flex justify-between">
+                <p className="text-gray-700">Total Items</p>
+                <p className="text-gray-700">{totalQuantityInCarts}</p>
               </div>
+              <div className="mb-2 flex justify-between">
+                <p className="text-gray-700">Subtotal</p>
+                <p className="text-gray-700">Rs.{totalPriceInCarts}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="text-gray-700">Shipping</p>
+                <p className="text-gray-700">Rs 100</p>
+              </div>
+              <hr className="my-4" />
+              <div className="flex justify-between">
+                <p className="text-lg font-bold">Total</p>
+                <div className="">
+                  <p className="mb-1 text-lg font-bold">Rs.{totalPriceInCarts + 100}</p>
+                  <p className="text-sm text-gray-700">including VAT</p>
+                </div>
+              </div>
+              <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+                Check out
+              </button>
             </div>
-            <button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-              Check out
-            </button>
-          </div>
+
+            )
+           }
+
         </div>
       </div>
     </>
