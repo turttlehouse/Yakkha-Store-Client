@@ -1,12 +1,18 @@
 import React from "react";
 import Navbar from "../../globals/components/navbar/Navbar";
-import {  useAppSelector } from "../../store/hooks";
+import {  useAppDispatch, useAppSelector } from "../../store/hooks";
+import { deleteCartItem } from "../../store/cartSlice";
 
 const Cart: React.FC = () => {
 
     const {items} = useAppSelector((state)=>state.carts)
+    const dispatch = useAppDispatch()
 
     // console.log(items)
+
+    const handleDelete = (productId : string)=>{
+      dispatch(deleteCartItem(productId))
+    }
 
   return (
     <>
@@ -45,7 +51,7 @@ const Cart: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     <p className="text-sm">Rs.{item?.Product?.productPrice}</p>
-                    <div>
+                    <div onClick={()=>handleDelete(item?.Product?.id)} className="cursor-pointer">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

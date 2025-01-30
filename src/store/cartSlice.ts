@@ -4,6 +4,9 @@ import { Status } from "../globals/types/types";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
 
+interface DeleteAction{
+    productId : string
+}
 
 const initialState : CartState = {
     items : [],
@@ -21,13 +24,21 @@ const cartSlice = createSlice({
         },
         setStatus(state:CartState,action: PayloadAction<Status>){
             state.status = action.payload
+        },
+        deleteItem(state:CartState,action:PayloadAction<DeleteAction>){
+            // state.items = state.items.filter(item => item.Product._id !== action.payload.productId)
+            const index = state.items.findIndex(item=>item?.Product?.id === action.payload?.productId)
+            //-1 means not found case
+            if(index !== -1){
+                state.items.splice(index,1)
+            }
         }
     }
 })
 
 //createSlice trigger vayepaxi obj return garxa
 
-export const {setItems,setStatus} = cartSlice.actions
+export const {setItems,setStatus,deleteItem} = cartSlice.actions
 
 
 export default cartSlice.reducer
@@ -72,5 +83,27 @@ export function fetchCartItems(){
             dispatch(setStatus(Status.ERROR))
             
         }
+    }
+}
+
+export function deleteCartItem(productId:string){
+    return async function deleteCartItemThunk(dispatch:AppDispatch) {
+        dispatch(setStatus(Status.LOADING))
+        try {
+            const response = await APIAuthenticated.delete(`customer/cart/${productId}`)
+            if(response.status === 200){
+                dispatch(setStatus(Status.SUCCESS))
+                //object ko form ma expect garxa reducer le so object pass gareko
+                dispatch(deleteItem({productId}))
+            }
+            else{
+                dispatch(setStatus(Status.ERROR))
+            }
+            
+        } catch (error) {
+            dispatch(setStatus(Status.ERROR))
+            
+        }
+        
     }
 }
