@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Product, ProductState } from "../globals/types/productTypes";
 import { Status } from "../globals/types/types";
 import { AppDispatch } from "./store";
-import API from "../http";
+import {API} from "../http";
 import { RootState } from "./store";
 
  

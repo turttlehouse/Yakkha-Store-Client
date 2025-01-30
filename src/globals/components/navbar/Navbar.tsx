@@ -1,20 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../../store/hooks";
 import React from "react";
 
 const Navbar = () => {
+  const navigate  = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
-  // console.log(user);
+  
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token || !!user);
+    setIsLoggedIn(!!token || !!user.token);
   }, [user.token]);
 
   const handleLogout = ()=>{
     localStorage.removeItem('token')
     setIsLoggedIn(false);
+    navigate('/login')
   }
 
   return (
@@ -24,8 +26,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex flex-col gap-4 px-4 text-center sm:flex-row sm:items-center sm:justify-between sm:gap-0 lg:px-8 xl:max-w-7xl">
         <div>
-          <a
-            href="#"
+          <Link
+            to="/"
             className="group inline-flex items-center gap-2 text-lg font-bold tracking-wide text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
           >
             <svg
@@ -42,7 +44,7 @@ const Navbar = () => {
               />
             </svg>
             <span className="text-black">Company</span>
-          </a>
+          </Link>
         </div>
         <nav className="space-x-3 md:space-x-6">
           {!isLoggedIn ? (
@@ -61,6 +63,13 @@ const Navbar = () => {
               </Link>
             </>
           ) : (
+            <>
+            <Link
+              to="/cart"
+              className="text-sm font-semibold text-black hover:text-blue-600  dark:hover:text-blue-400"
+            >
+              <span>Cart</span>
+            </Link>
             <Link
               to="#"
               onClick={handleLogout}
@@ -68,6 +77,8 @@ const Navbar = () => {
             >
               <span>Logout</span>
             </Link>
+            </>
+
           )}
         </nav>
       </div>
