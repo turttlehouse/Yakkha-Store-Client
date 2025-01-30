@@ -8,6 +8,10 @@ interface DeleteAction{
     productId : string
 }
 
+interface UpdateAction extends DeleteAction{
+    quantity : number
+}
+
 const initialState : CartState = {
     items : [],
     status : Status.LOADING
@@ -32,13 +36,19 @@ const cartSlice = createSlice({
             if(index !== -1){
                 state.items.splice(index,1)
             }
+        },
+        updateItem(state:CartState,action:PayloadAction<UpdateAction>){
+            const index = state.items.findIndex(item =>item.Product.id === action.payload.productId)
+            if(index !== -1){
+                state.items[index].quantity = action.payload.quantity
+            }
         }
     }
 })
 
 //createSlice trigger vayepaxi obj return garxa
 
-export const {setItems,setStatus,deleteItem} = cartSlice.actions
+export const {setItems,setStatus,deleteItem,updateItem} = cartSlice.actions
 
 
 export default cartSlice.reducer
@@ -105,5 +115,25 @@ export function deleteCartItem(productId:string){
             
         }
         
+    }
+}
+
+export function updateCartItem(productId:string,quantity:number){
+    return async function updateCartItemThunk(dispatch:AppDispatch){
+        dispatch(setStatus(Status.LOADING))
+        try {
+            const reponse = await APIAuthenticated.patch(`customer/cart/${productId}`,{
+                quantity : quantity
+            })
+            if(reponse.status === 200){
+                dispatch(setStatus(Status.SUCCESS))
+                dispatch(updateItem({productId,quantity}))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+        } catch (error) {
+            setStatus(Status.ERROR)
+            
+        }
     }
 }
