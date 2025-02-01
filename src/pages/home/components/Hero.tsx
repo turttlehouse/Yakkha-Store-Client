@@ -13,10 +13,10 @@ const Hero : React.FC = () => {
         {/* <div className="mb-2 inline-flex rounded border border-gray-200 bg-gray-100 px-2 py-1 text-sm font-medium leading-4 text-gray-800 dark:border-gray-600/50 dark:bg-gray-700/50 dark:text-gray-200">
           v6.0 Latest Version
         </div> */}
-        <h1 className="mb-4 text-4xl font-black text-black dark:text-white">
-          Yakkha
-          <span className="text-blue-600 dark:text-blue-500">
-            &nbsp;Store
+        <h1 className="mb-4 text-4xl text-blue-600 dark:text-blue-500 font-black">
+          About
+          <span className="text-black dark:text-white">
+            &nbsp;Us
           </span>
         </h1>
         <h2 className="text-xl font-bold text-[black] leading-relaxed ">
@@ -41,7 +41,7 @@ const Hero : React.FC = () => {
           </a>
           <a
             href="#"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-7 py-3.5 font-semibold leading-6 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600/40 dark:active:border-gray-700"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-7 py-3.5 font-semibold leading-6 text-red-700 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-transparent dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600/40 dark:active:border-gray-700"
           >
             <span>Buy more</span>
           </a>

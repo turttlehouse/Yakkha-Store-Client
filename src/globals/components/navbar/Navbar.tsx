@@ -8,7 +8,7 @@ const Navbar = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
-  const dipatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const {items} = useAppSelector((state)=>state.carts)
 
@@ -16,7 +16,7 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token || !!user.token);
 
-    dipatch(fetchCartItems());
+    dispatch(fetchCartItems());
 
     
   }, [user.token]);
@@ -38,8 +38,12 @@ const Navbar = () => {
             to="/"
             className="group inline-flex items-center gap-2 text-lg font-bold tracking-wide text-gray-900 hover:text-gray-600 dark:text-gray-100 dark:hover:text-gray-300"
           >
-            <span className="text-black">Yakkha Store</span>
-          </Link>
+          <img src="/brand-logo.png" className="w-10 h-10" />     
+               
+          <span>
+  <span className="text-blue-500">Yakkha</span>
+  <span className="text-white"> Store</span>
+</span>          </Link>
         </div>
         <nav className="space-x-3 md:space-x-6">
           {!isLoggedIn ? (

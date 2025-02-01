@@ -1,72 +1,95 @@
 import React from "react";
 import Navbar from "../../globals/components/navbar/Navbar";
-import { useAppSelector } from "../../store/hooks";
-import { ItemDetails, OrderData, PaymentMethod } from "../../globals/types/checkoutTypes";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  ItemDetails,
+  OrderData,
+  PaymentMethod,
+} from "../../globals/types/checkoutTypes";
+import { orderItem } from "../../store/orderSlice";
+import { Status } from "../../globals/types/types";
+import { useNavigate } from "react-router-dom";
 
 const Checkout: React.FC = () => {
+  const dipatch = useAppDispatch();
+  const navigate = useNavigate();
   const { items } = useAppSelector((state) => state.carts);
+
+  const {khaltiUrl,status} = useAppSelector((state)=>state.orders)
 
   const [paymentMethod, setPaymentMethod] = React.useState<PaymentMethod>(PaymentMethod.COD);
 
-  const [data,setData] = React.useState<OrderData>({
-    phoneNumber:'',
-    shippingAddress:'',
-    totalAmount : 0,
-    paymentDetails : {
-        paymentMethod : PaymentMethod.COD
+  const [data, setData] = React.useState<OrderData>({
+    phoneNumber: "",
+    shippingAddress: "",
+    totalAmount: 0,
+    paymentDetails: {
+      paymentMethod: PaymentMethod.COD,
     },
-    items : []
-  })
+    items: [],
+  });
 
-  const handlePaymentMethod = (e: React.ChangeEvent<HTMLInputElement>)=>{
+  const handlePaymentMethod = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(e.target.value)
-    // setPaymentMethod(e.target.value as PaymentMethod)
+
+    //button toggle garna
+    setPaymentMethod(e.target.value as PaymentMethod)
 
     setData({
-        ...data,
-        paymentDetails : {
-            paymentMethod : e.target.value as PaymentMethod
-        }
-    })
-  }
+      ...data,
+      paymentDetails: {
+        paymentMethod: e.target.value as PaymentMethod,
+      },
+    });
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
-
-    const {name,value} = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
 
     setData({
-        ...data,
-        //search the name in the data object and set the value
-        [name] : value
-    })
+      ...data,
+      //search the name in the data object and set the value
+      [name]: value,
+    });
+  };
 
-  }
+  //   console.log(data);
+  let subTotal = items?.reduce(
+    (total, item) => item?.Product?.productPrice * item?.quantity + total,
+    0
+  );
 
-//   console.log(data);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const itemDetails : ItemDetails[] = items?.map((item)=>{
-        return({
+    const itemDetails: ItemDetails[] = items?.map((item) => {
+      return {
+        quantity: item?.quantity,
+        productId: item?.Product?.id,
+      };
+    });
 
-            quantity : item?.quantity,
-            productId : item?.Product?.id
-        })
-    })
+    const orderData: OrderData = {
+      ...data,
+      items: itemDetails,
+      totalAmount: subTotal,
+    };
 
-    const totalAmount = items?.reduce((total,item)=>item?.Product?.productPrice * item?.quantity + total,0)
+    // console.log(orderData);
+    await dipatch(orderItem(orderData));
 
-    const orderData : OrderData = {
-        ...data,
-        items : itemDetails,
-        totalAmount
+    if(khaltiUrl){
+      window.location.href = khaltiUrl;
+    }
+  };
+
+  React.useEffect(()=>{
+    if(status === Status.SUCCESS){
+      alert('Order Placed Successfully');
+      navigate('/');
     }
 
-    console.log(orderData);
-  }
-
-
+  },[status,dipatch])
 
   return (
     <>
@@ -279,31 +302,35 @@ const Checkout: React.FC = () => {
               <div className="mt-6 border-t border-b py-2">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium text-gray-900">Subtotal</p>
-                  <p className="font-semibold text-gray-900">Rs.</p>
+                  <p className="font-semibold text-gray-900">Rs.{subTotal}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-medium text-gray-900">Shipping</p>
-                  <p className="font-semibold text-gray-900">Rs.</p>
+                  <p className="font-semibold text-gray-900">Rs.100</p>
                 </div>
               </div>
 
               {/* Total */}
               <div className="mt-6 flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-900">Total</p>
-                <p className="text-2xl font-semibold text-gray-900">Rs.</p>
+                <p className="text-2xl font-semibold text-gray-900">
+                  Rs.{subTotal + 100}
+                </p>
               </div>
             </div>
 
-            {/* {
-
-                        paymentMethod === 'COD'? */}
-            <button type="submit" className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">
-              Place Order
-            </button>
-            {/* : */}
-            {/* <button className="mt-4 mb-8 w-full rounded-md bg-purple-900 px-6 py-3 font-medium text-white">Pay with Khalti</button> */}
-
-            {/* } */}
+            {paymentMethod === PaymentMethod.KHALTI ? (
+              <button className="mt-4 mb-8 w-full rounded-md bg-purple-900 px-6 py-3 font-medium text-white">
+                Pay with Khalti
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white"
+              >
+                Place Order
+              </button>
+            )}
           </div>
         </form>
       </div>
