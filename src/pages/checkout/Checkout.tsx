@@ -6,7 +6,7 @@ import {
   OrderData,
   PaymentMethod,
 } from "../../globals/types/checkoutTypes";
-import { orderItem } from "../../store/orderSlice";
+import { orderItem } from "../../store/checkoutSlice";
 import { Status } from "../../globals/types/types";
 import { useNavigate } from "react-router-dom";
 
