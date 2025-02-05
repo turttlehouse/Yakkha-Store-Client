@@ -1,10 +1,11 @@
 import React from "react";
 import Navbar from "../../../globals/components/navbar/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { fetchMyOrderDetails } from "../../../store/checkoutSlice";
+import { cancelMyOrder, fetchMyOrderDetails } from "../../../store/checkoutSlice";
 
 const MyOrdersDetails: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   // console.log(id);
 
@@ -17,7 +18,15 @@ const MyOrdersDetails: React.FC = () => {
     if (id) {
       dispatch(fetchMyOrderDetails(id));
     }
-  }, []);
+  }, [id]);
+
+  const handleCancelOrder = async()=>{
+    if(id){
+
+      await dispatch(cancelMyOrder(id))
+       navigate('/myOrders')
+    }
+  }
 
   return (
     <>
@@ -177,14 +186,15 @@ const MyOrdersDetails: React.FC = () => {
                   <div className="flex w-full justify-center items-center md:justify-start md:items-start">
                     <>
                       <button
-                        className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
+                        className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800  w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
                         style={{ marginTop: "10px" }}
                       >
                         Edit Order
                       </button>
 
                       <button
-                        className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
+                        onClick={handleCancelOrder}
+                        className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
                         style={{ marginTop: "10px" }}
                       >
                         Cancel Order
@@ -194,7 +204,7 @@ const MyOrdersDetails: React.FC = () => {
 
                   <div className="flex w-full justify-center items-center md:justify-start md:items-start">
                     <button
-                      className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
+                      className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-3 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
                       style={{
                         marginTop: "10px",
                         backgroundColor: "red",
