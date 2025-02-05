@@ -2,12 +2,13 @@ import React from "react";
 import Navbar from "../../../globals/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { fetchMyOrders } from "../../../store/checkoutSlice";
+import { Link } from "react-router-dom";
 
 const Orders: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { myOrders } = useAppSelector((state) => state.orders);
-  console.log(myOrders);
+//   console.log(myOrders);
 
   React.useEffect(() => {
     dispatch(fetchMyOrders());
@@ -120,9 +121,11 @@ const Orders: React.FC = () => {
                         </div>
                       </td> */}
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <Link to = {`/myOrders/${order.id}`}>
                               <p className="text-blue-900 whitespace-no-wrap underline">
                                 {order?.id}
                               </p>
+                      </Link>
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                               <p className="text-gray-900 whitespace-no-wrap">

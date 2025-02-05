@@ -1,3 +1,4 @@
+import { Product } from "./productTypes";
 import { Status } from "./types";
 
 export enum PaymentMethod {
@@ -30,6 +31,8 @@ export interface OrderResponseData {
   status: Status;
   khaltiUrl: string | null;
   myOrders: MyordersData[];
+
+  orderDetails : OrderDetails[];  
 }
 
 //order types
@@ -70,7 +73,8 @@ export interface MyordersData {
   createdAt: string;
   updatedAt: string;
   paymentId: string;
-  userId: string;
+  // userId: string;
+  userId : UserData;
   Payment: OrderPaymentData;
 
   // "Payment": {
@@ -81,4 +85,21 @@ export interface MyordersData {
   //     "createdAt": "2025-01-31T15:37:29.000Z",
   //     "updatedAt": "2025-01-31T15:37:29.000Z"
   // }
+}
+
+
+//orderDetails types
+interface UserData{
+  username : string;
+  email : string;
+}
+
+
+export interface OrderDetails{
+  id : string;
+  quantity : number;
+  orderId : string;
+  Product : Product;
+  Order : MyordersData;
+
 }

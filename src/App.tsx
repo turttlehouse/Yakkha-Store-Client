@@ -8,6 +8,7 @@ import SingleProduct from "./pages/product/SingleProduct";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
 import Orders from "./pages/orders/myOrders/Orders";
+import MyOrderDetails from "./pages/orders/myOrders/MyOrderDetails";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/cart" element= {<Cart/>}/>
           <Route path = "/checkout" element = {<Checkout />} />
           <Route path = "/myOrders" element = {<Orders />} />
+          <Route path = "/myOrders/:id" element = {<MyOrderDetails />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>

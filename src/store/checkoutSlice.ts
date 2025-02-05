@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Status } from "../globals/types/types";
-import { MyordersData, OrderData, OrderResponseData, OrderResponseItem } from "../globals/types/checkoutTypes";
+import { MyordersData, OrderData, OrderDetails, OrderResponseData, OrderResponseItem } from "../globals/types/checkoutTypes";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
 
@@ -9,7 +9,8 @@ const initialState : OrderResponseData = {
     items : [],
     status : Status.LOADING,
     khaltiUrl : null,
-    myOrders : []
+    myOrders : [],
+    orderDetails : []
 }
 
 const orderSlice = createSlice({
@@ -27,11 +28,14 @@ const orderSlice = createSlice({
         },
         setMyOrders(state:OrderResponseData,action:PayloadAction<MyordersData[]>){
             state.myOrders = action.payload
+        },
+        setMyOrderDetails(state : OrderResponseData,action:PayloadAction<OrderDetails[]>){
+            state.orderDetails = action.payload
         }
     }
 })
 
-export const { setItems,setStatus,setKhaltiUrl,setMyOrders } = orderSlice.actions;
+export const { setItems,setStatus,setKhaltiUrl,setMyOrders,setMyOrderDetails } = orderSlice.actions;
 
 export default orderSlice.reducer;
 
@@ -68,6 +72,25 @@ export function fetchMyOrders(){
             if(response.status === 200){
                 dispatch(setStatus(Status.SUCCESS))
                 dispatch(setMyOrders(response.data.data))
+            }else{
+                dispatch(setStatus(Status.ERROR))
+            }
+            
+        } catch (error) {
+            dispatch(setStatus(Status.ERROR))
+            
+        }
+    }
+}
+
+export function fetchMyOrderDetails(id:string){
+    return async function fetchMyOrdersThunk(dispatch:AppDispatch){
+        dispatch(setStatus(Status.LOADING))
+        try {
+            const response = await APIAuthenticated.get('order/customer/'+id);
+            if(response.status === 200){
+                dispatch(setStatus(Status.SUCCESS))
+                dispatch(setMyOrderDetails(response.data.data))
             }else{
                 dispatch(setStatus(Status.ERROR))
             }
