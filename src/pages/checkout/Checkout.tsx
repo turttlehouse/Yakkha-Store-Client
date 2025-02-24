@@ -11,6 +11,9 @@ import { Status } from "../../globals/types/types";
 import { useNavigate } from "react-router-dom";
 
 const Checkout: React.FC = () => {
+
+  const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
+
   const dipatch = useAppDispatch();
   const navigate = useNavigate();
   const { items } = useAppSelector((state) => state.carts);
@@ -114,8 +117,9 @@ const Checkout: React.FC = () => {
                   >
                     <img
                       className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                      src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
-                      alt=""
+                      // src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                      src={item?.Product?.productImageUrl ? `${SERVER_URL}${item.Product.productImageUrl}` : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"}
+                      alt="product image"
                     />
 
                     <div className="flex w-full flex-col px-4 py-4">

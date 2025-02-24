@@ -5,6 +5,8 @@ import { deleteCartItem, updateCartItem } from "../../store/cartSlice";
 import { Link } from "react-router-dom";
 
 const Cart: React.FC = () => {
+    const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
+
 
     const {items} = useAppSelector((state)=>state.carts)
     const dispatch = useAppDispatch()
@@ -41,7 +43,11 @@ const Cart: React.FC = () => {
                 return(
 
             <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-              <img src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg" className="h-[100px]" />
+              <img 
+              // src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg" 
+              src={item?.Product?.productImageUrl ? `${SERVER_URL}${item.Product.productImageUrl}` : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"}
+              alt="product image"
+              className="h-[100px]" />
               <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                 <div className="mt-5 sm:mt-0">
                   <h2 className="text-lg font-bold text-gray-900">{item?.Product?.productName}</h2>

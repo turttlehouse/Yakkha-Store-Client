@@ -6,6 +6,8 @@ import { fetchByProductId } from "../../store/productSlice";
 import { addToCart } from "../../store/cartSlice";
 
 const SingleProduct: React.FC = () => {
+
+    const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL;
     const {id} = useParams();
     const dispatch  = useAppDispatch();
 
@@ -33,7 +35,8 @@ const SingleProduct: React.FC = () => {
             <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
               <img
                 className="w-full h-full object-cover"
-                src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                // src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
+                src={singleProduct?.productImageUrl ? `${SERVER_URL}${singleProduct.productImageUrl}` : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"}
                 alt="Product Image"
               />
             </div>

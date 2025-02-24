@@ -13,6 +13,8 @@ const APIAuthenticated = axios.create({
     headers :{
         "Content-Type" : "application/json",
         "Accept" : "application/json",
+        // "Authorization" : localStorage.getItem('token')
+        // "Authorization" : localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : null
         "Authorization" : `${localStorage.getItem('token')}`
     }
 
