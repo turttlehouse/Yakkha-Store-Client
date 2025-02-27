@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Status } from "../globals/types/types";
-import { MyordersData, OrderData, OrderDetails, OrderResponseData, OrderResponseItem } from "../globals/types/checkoutTypes";
+import { MyordersData, OrderData, OrderDetails, OrderResponseData, OrderResponseItem, OrderStatus } from "../globals/types/checkoutTypes";
 import { AppDispatch } from "./store";
 import { APIAuthenticated } from "../http";
 
@@ -31,11 +31,22 @@ const orderSlice = createSlice({
         },
         setMyOrderDetails(state : OrderResponseData,action:PayloadAction<OrderDetails[]>){
             state.orderDetails = action.payload
+        },
+        updateOrderStatus(state : OrderResponseData,action:PayloadAction<{status:OrderStatus,orderId:string}>){
+
+            const status = action.payload.status
+            // console.log(status)
+            const orderId = action.payload.orderId
+            // console.log(orderId)
+
+            const updatedOrder = state.myOrders.map(order=>order.id === orderId ? {...order,orderStatus : status} : order)
+            state.myOrders = updatedOrder
+            // console.log(state.myOrders)
         }
     }
 })
 
-export const { setItems,setStatus,setKhaltiUrl,setMyOrders,setMyOrderDetails } = orderSlice.actions;
+export const { setItems,setStatus,setKhaltiUrl,setMyOrders,setMyOrderDetails,updateOrderStatus } = orderSlice.actions;
 
 export default orderSlice.reducer;
 
@@ -117,5 +128,11 @@ export function cancelMyOrder(id:string){
             setStatus(Status.ERROR)
             
         }
+    }
+}
+
+export function updateOrderStatusOnStore(data:any){
+    return async function updateOrderStatusOnStoreThunk(dispatch:AppDispatch){
+        dispatch(updateOrderStatus(data))
     }
 }

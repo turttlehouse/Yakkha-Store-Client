@@ -9,6 +9,15 @@ import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
 import Orders from "./pages/orders/myOrders/Orders";
 import MyOrderDetails from "./pages/orders/myOrders/MyOrderDetails";
+import { io } from "socket.io-client";
+
+const serverUrl = import.meta.env.VITE_APP_SERVER_URL
+
+export const socket = io(serverUrl,{
+  auth :{
+    token : localStorage.getItem('token')
+  }
+})
 
 const App = () => {
   return (

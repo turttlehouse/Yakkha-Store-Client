@@ -1,9 +1,10 @@
 import React from "react";
 import Navbar from "../../../globals/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { fetchMyOrders } from "../../../store/checkoutSlice";
+import { fetchMyOrders, updateOrderStatusOnStore } from "../../../store/checkoutSlice";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "../../../globals/types/checkoutTypes";
+import { socket } from "../../../App";
 
 const Orders: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,14 @@ const filteredOrders = myOrders && myOrders?.filter((order)=>order.orderStatus =
   React.useEffect(() => {
     dispatch(fetchMyOrders());
   }, []);
+
+  React.useEffect(()=>{
+    socket.on('statusUpdated',(data : any)=>{
+      console.log(data);
+      dispatch(updateOrderStatusOnStore(data))
+    })
+
+  },[socket])
 
   return (
     <div>
