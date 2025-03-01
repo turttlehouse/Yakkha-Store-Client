@@ -13,7 +13,7 @@ const Navbar = () => {
   const {items} = useAppSelector((state)=>state.carts)
 
   React.useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem((import.meta.env.VITE_CLIENT_STORAGE_KEY) as string);
     setIsLoggedIn(!!token || !!user.token);
 
     dispatch(fetchCartItems());
@@ -22,7 +22,7 @@ const Navbar = () => {
   }, [user.token]);
 
   const handleLogout = ()=>{
-    localStorage.removeItem('token')
+    localStorage.removeItem(import.meta.env.VITE_CLIENT_STORAGE_KEY);
     setIsLoggedIn(false);
     navigate('/login')
   }

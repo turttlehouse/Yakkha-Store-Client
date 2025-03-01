@@ -39,10 +39,10 @@ const Cart: React.FC = () => {
           <div className="rounded-lg md:w-2/3">
            
            {
-            items?.length > 0 ? ( items.map((item)=>{
+            items?.length > 0 ? ( items.map((item,productId)=>{
                 return(
 
-            <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
+            <div key={productId} className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
               <img 
               // src="https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg" 
               src={item?.Product?.productImageUrl ? `${SERVER_URL}${item.Product.productImageUrl}` : "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"}
@@ -63,6 +63,10 @@ const Cart: React.FC = () => {
                       type="number"
                       value={item?.quantity}
                       min="1"
+                      readOnly
+                      // defaultValue ={item?.quantity}
+                      // onChange={(e) => handleUpdate(item?.Product?.id, Number(e.target.value))}
+
                     />
                     <span onClick={()=>handleUpdate(item?.Product?.id,item?.quantity + 1)} className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
                       +
@@ -75,13 +79,13 @@ const Cart: React.FC = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M6 18L18 6M6 6l12 12"
                         />
                       </svg>
