@@ -15,7 +15,7 @@ const serverUrl = import.meta.env.VITE_APP_SERVER_URL
 
 export const socket = io(serverUrl,{
   auth :{
-    token : localStorage.getItem('token')
+    token : localStorage.getItem('client_auth_token')
   }
 })
 
