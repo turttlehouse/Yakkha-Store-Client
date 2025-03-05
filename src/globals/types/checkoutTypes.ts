@@ -48,7 +48,7 @@ export enum OrderStatus {
   All = "all"
 }
 
-enum PaymentStatus {
+export enum PaymentStatus {
   Paid = "paid",
   Unpaid = "unpaid",
   Pending = "pending",

@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../../../globals/components/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { fetchMyOrders, updateOrderStatusOnStore } from "../../../store/checkoutSlice";
+import { fetchMyOrders, updateOrderStatusOnStore, updatePaymentStatusOnStore } from "../../../store/checkoutSlice";
 import { Link } from "react-router-dom";
 import { OrderStatus } from "../../../globals/types/checkoutTypes";
 import { socket } from "../../../App";
@@ -42,6 +42,13 @@ const filteredOrders = myOrders && myOrders?.filter((order)=>order.orderStatus =
     socket.on('statusUpdated',(data : any)=>{
       console.log(data);
       dispatch(updateOrderStatusOnStore(data))
+    })
+
+  },[socket])
+  React.useEffect(()=>{
+    socket.on('paymentStatusUpdated',(data : any)=>{
+      // console.log(data);
+      dispatch(updatePaymentStatusOnStore(data))
     })
 
   },[socket])
