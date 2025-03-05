@@ -9,6 +9,8 @@ const MyOrdersDetails: React.FC = () => {
   const { id } = useParams();
   // console.log(id);
 
+  const SERVER_URL = import.meta.env.VITE_APP_SERVER_URL
+
   const dispatch = useAppDispatch();
 
   const { orderDetails } = useAppSelector((state) => state.orders);
@@ -66,8 +68,8 @@ const MyOrdersDetails: React.FC = () => {
                         <img
                           className="w-full hidden md:block"
                           src={
-                            "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg" ||
-                            order?.Product?.productImageUrl
+                            order?.Product?.productImageUrl ? `${SERVER_URL}${order.Product.productImageUrl}` :
+                            "https://cdn.pixabay.com/photo/2020/05/22/17/53/mockup-5206355_960_720.jpg"
                           }
                           alt="product image"
                         />

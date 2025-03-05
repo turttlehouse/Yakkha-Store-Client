@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import React from "react";
 import { fetchCartItems } from "../../../store/cartSlice";
+import ConfirmationModal from "../modal/ConfirmationModal";
 
 const Navbar = () => {
   const navigate  = useNavigate();
@@ -21,10 +22,24 @@ const Navbar = () => {
     
   }, [user.token]);
 
+  const [isOpen,setIsOpen] = React.useState<boolean>(false);
+  const [message,setMessage] = React.useState<string>('');
+
   const handleLogout = ()=>{
+    setIsOpen(true);
+    setMessage('Are you sure you want to logout?');
+  }
+
+  const handleAlertConfirm =()=>{
     localStorage.removeItem(import.meta.env.VITE_CLIENT_STORAGE_KEY);
     setIsLoggedIn(false);
+    setMessage('');
     navigate('/login')
+  }
+
+  const handleAlertCancel = ()=>{
+    setIsOpen(false);
+    setMessage('');
   }
 
   return (
@@ -63,12 +78,21 @@ const Navbar = () => {
             </>
           ) : (
             <>
-            <Link
-              to="/cart"
+             <Link
+              to="/myorders"
+              title="View Orders"
               className="text-sm font-semibold text-black hover:text-blue-600  dark:hover:text-blue-400"
             >
-              <span>Cart <sup>{items?.length >0 && items?.length}</sup></span>
+              <span>MyOrders</span>
             </Link>
+            <Link
+              to="/cart"
+              title="View Cart"
+              className="text-sm font-semibold text-black hover:text-blue-600  dark:hover:text-blue-400"
+            >
+              <span>Cart <sup className="text-sm px-2 py-0.5 font-bold bg-red-500 text-white rounded-full p-1">{items?.length >0 && items?.length}</sup></span>
+            </Link>
+
             <Link
               to="#"
               onClick={handleLogout}
@@ -76,12 +100,15 @@ const Navbar = () => {
             >
               <span>Logout</span>
             </Link>
+           
             </>
 
           )}
         </nav>
       </div>
+      <ConfirmationModal isOpen={isOpen} message={message} onConfirm={handleAlertConfirm} onCancel ={handleAlertCancel} />
     </header>
+    
   );
 };
 

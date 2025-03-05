@@ -165,7 +165,7 @@ const filteredOrders = myOrders && myOrders?.filter((order)=>order.orderStatus =
                         </div>
                       </td> */}
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <Link to = {`/myOrders/${order.id}`}>
+                      <Link to = {`/myOrders/${order.id}`} title={`View Order Details`}>
                               <p className="text-blue-900 whitespace-no-wrap underline">
                                 {order?.id}
                               </p>
