@@ -147,7 +147,7 @@ const filteredOrders = myOrders && myOrders?.filter((order)=>order.orderStatus =
                     {filteredOrders?.length > 0 &&
                       filteredOrders?.map((order) => {
                         return (
-                          <tr>
+                          <tr key={order?.id}>
                             {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 w-10 h-10">
